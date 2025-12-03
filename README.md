@@ -18,9 +18,9 @@
 
 Projenin demo dosyası için ekran görüntüsü aşağıda gösterilmiştir:
 
-![Demo Görseli](./demoNova.png)
+![Demo Görseli](./demoNOVA.png)
 
-Demo dosyasını indirmek için [buraya tıklayabilirsiniz](./demoNova.pbg).
+Demo dosyasını indirmek için [buraya tıklayabilirsiniz](./demoNOVA.pbg).
 
 
 
