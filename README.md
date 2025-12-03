@@ -1,108 +1,96 @@
-📌 Nova-Web
+🌌 Nova-Web
+<p align="center"> <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge"/> <img src="https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge"/> <img src="https://img.shields.io/badge/Flask-Framework-black?style=for-the-badge&logo=flask"/> </p> <p align="center"> Nova-Web, SMS/metin analizini web arayüzü üzerinden gerçekleştiren modern bir NLP tabanlı projedir. Kullanıcı dostu arayüzü, hızlı sonuç veren Flask API yapısı ve eğitilmiş ML modeliyle gerçek zamanlı spam tespiti sağlar. </p>
+✨ Öne Çıkanlar
 
-Nova-Web, kullanıcıdan alınan SMS/metin içeriklerini analiz eden, spam tespiti yapan ve web arayüzü üzerinden çalışan bir uygulamadır. Arka planda Flask; ön yüzde HTML/CSS/JS kullanılır. Geliştirilmeye açık, modüler bir NLP projesidir.
+🔥 Gerçek zamanlı SMS sınıflandırma
 
-🚀 Özellikler
+🎨 Şık ve sade web arayüzü
 
-🔎 SMS / metin analizi (spam – normal)
+⚡ Hafif & hızlı Flask altyapısı
 
-🌐 Kullanıcı dostu web arayüzü
+🧠 NLP tabanlı spam tespit modeli
 
-🔌 JSON tabanlı API endpoint desteği
+📡 JSON API destekli uç nokta
 
-🧠 NLP + makine öğrenimi ile sınıflandırma
+📁 Modüler dosya yapısı — geliştirmeye çok uygun
 
-📁 Temiz ve modüler proje yapısı
 
-💡 Kolay geliştirme ve model güncelleme imkanları
-
-🧰 Kullanılan Teknolojiler
-Amaç	Teknoloji
-Backend	Python, Flask
+🧰 Teknolojiler
+Alan	Teknoloji
+Backend	Flask, Python
 Frontend	HTML, CSS, JavaScript
-NLP/ML	scikit-learn, preprocessing, modelleme
-Ortam	Virtual Environment (venv)
+ML / NLP	Scikit-learn, Vectorizer, Model Pipeline
+Ortam	venv (Virtual Environment)
 📂 Proje Yapısı
 nova-web/
-├── app.py                 # Flask ana uygulaması
-├── static/                # CSS / JS / resimler
-│   ├── style.css
-│   └── script.js
-├── templates/             # HTML dosyaları
-│   └── index.html
-├── model/                 # Eğitilmiş model + vektörizer
-│   ├── spam_model.pkl
-│   └── vectorizer.pkl
-├── requirements.txt       # Gereken paketler
-└── README.md              # Proje dokümanı
+│
+├── app.py                 # Flask API + routing
+├── static/
+│   ├── style.css          # Tasarım
+│   └── script.js          # Dinamik işlemler
+├── templates/
+│   └── index.html         # Arayüz
+├── model/
+│   ├── spam_model.pkl     # Eğitilmiş ML modeli
+│   └── vectorizer.pkl     # NLP vectorizer
+│
+├── requirements.txt
+└── README.md
 
-
-⚠️ Not: venv/ ve .idea/ klasörleri .gitignore içinde tutulur ve GitHub’a yüklenmez.
-
-📦 Kurulum ve Çalıştırma
-
-1️⃣ Depoyu klonlayın
-
+🚀 Kurulum
+1️⃣ Depoyu klonla
 git clone https://github.com/fnur21/nova-web.git
 cd nova-web
 
-
-2️⃣ Sanal ortam oluşturun
-
+2️⃣ Sanal ortam oluştur
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+source venv/bin/activate    # Windows: venv\Scripts\activate
 
-
-3️⃣ Gereksinimleri yükleyin
-
+3️⃣ Gereksinimleri kur
 pip install -r requirements.txt
 
-
-4️⃣ Uygulamayı başlatın
-
+4️⃣ Çalıştır
 python app.py
 
 
-5️⃣ Tarayıcıdan açın
-
+📍 Aç:
 http://127.0.0.1:5000
 
-🔌 API Kullanımı
+🌐 API Endpoint
+POST → /analyze
 
-POST /analyze
-
-Gönderilen JSON:
+İstek:
 
 {
-  "sms_text": "Analiz edilecek metin"
+  "sms_text": "Analiz edilecek mesaj"
 }
 
 
-Örnek dönüş:
+Yanıt:
 
 {
   "prediction": "spam",
-  "confidence": 0.87
+  "confidence": 0.92
 }
 
-🛠️ Geliştirme Önerileri
+🛠️ Geliştirme Fikirleri
 
-Yeni ML modeli ekleme (RandomForest, SVM vb.)
+Kullanıcı geçmişini kaydetme
 
-Daha gelişmiş preprocessing
+Çoklu model desteği (SVM, RF, Logistic Regression)
 
-Modern UI tasarımı ekleme
+Dashboard oluşturma
 
-Unit test / API test entegrasyonu
+Mobil uyumlu modern UI
 
-Kullanıcıdan dosya yükleme (CSV) özelliği
+Çoklu dil desteği
 
-👤 Geliştirici
+👩‍💻 Geliştirici
 
 Fatma Nur Pekmez
-Niğde Ömer Halisdemir Üniversitesi — Bilgisayar Mühendisliği
+Bilgisayar Mühendisliği — Niğde Ömer Halisdemir Üniversitesi
 GitHub: fnur21
 
 📄 Lisans
 
-Bu proje MIT lisansı altındadır.
+MIT Lisansı ile yayınlanmıştır.
