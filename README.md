@@ -16,7 +16,7 @@
 
 🖥️ Demo Görünümü
 
-![Uploading image.png…]()
+Projenin demo dosyası: `demoNova.pbg`
 
 
 🧰 Teknolojiler
