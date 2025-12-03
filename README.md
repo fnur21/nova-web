@@ -14,9 +14,13 @@
 
 📁 Modüler dosya yapısı — geliştirmeye çok uygun
 
-🖥️ Demo Görünümü
+🖥️ Demo
+
+Projenin demo dosyası için ekran görüntüsü aşağıda gösterilmiştir:
 
 ![Demo Görseli](./demoNova.png)
+
+Demo dosyasını indirmek için [buraya tıklayabilirsiniz](./demoNova.pbg).
 
 
 
