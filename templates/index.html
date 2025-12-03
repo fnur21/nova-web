@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Güvenlik Analizi - Liquid Control</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================================= */
+        /* TEMEL AYARLAR VE LİQUİD ESTETİK */
+        /* ================================================= */
+        :root {
+            /* Renk Paleti - Minimal Koyu & Metalik Vurgular */
+            --color-bg-deep: #12121D;       /* Ana Arkaplan (Koyu Siyah/Mor) */
+            --color-bg-start: #1A1A2B;
+            --color-bg-end: #252538;
+            --color-panel-base: rgba(35, 35, 50, 0.7); /* Şık Koyu Panel */
+            --color-accent-purple: #9A77D0; /* Ana Vurgu */
+            --color-accent-pink: #FF66AA;   /* İkincil Vurgu */
+            --color-white: #EAEAEA;
+            --color-text-faded: rgba(230, 230, 230, 0.6);
+            --color-danger-soft: #FF708C;
+
+            /* Geçişler ve Gölgeler */
+            --transition-liquid: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Yavaş, Esnek Geçiş */
+            --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.4);
+            --shadow-active: 0 0 25px rgba(154, 119, 208, 0.8);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all var(--transition-liquid);
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            margin: 0;
+            background: linear-gradient(160deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+            color: var(--color-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        /* ================================================= */
+        /* HEADER */
+        /* ================================================= */
+        .app-header {
+            padding: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+        }
+        .header-title h1 { margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+        .header-title p { margin: 0; font-size: 16px; color: var(--color-text-faded); }
+        .risk-tag {
+            background-color: var(--color-accent-pink);
+            color: var(--color-bg-deep);
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 0 10px rgba(255, 102, 170, 0.6);
+            transform: scale(1);
+        }
+        .risk-tag:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 102, 170, 0.9);
+        }
+
+        /* ================================================= */
+        /* ANA DÜZEN VE PANELLER */
+        /* ================================================= */
+        .main-layout {
+            display: flex;
+            align-items: stretch;
+            flex-wrap: wrap;
+            padding-bottom: 50px;
+            flex-grow: 1;
+        }
+
+        .control-panel {
+            background: var(--color-panel-base);
+            backdrop-filter: blur(8px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-subtle);
+            padding: 40px;
+            margin: 20px 15px;
+            min-width: 380px;
+            flex-direction: column;
+            display: flex;
+        }
+
+        .input-area { flex: 2; margin-right: 40px; }
+        .result-area { flex: 1.2; max-width: 500px; }
+
+        /* GİRİŞ ELEMANLARI */
+        .form-group { margin-bottom: 35px; }
+        .form-group label {
+            font-size: 16px;
+            color: var(--color-accent-purple);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: block;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 20px 25px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: var(--color-white);
+            font-size: 18px;
+            font-weight: 400;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--color-accent-purple);
+            box-shadow: 0 0 15px rgba(154, 119, 208, 0.6);
+        }
+        textarea {
+            height: 380px;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        /* ANALİZ BUTONU */
+        .btn-liquid {
+            width: 100%;
+            padding: 28px;
+            border: none;
+            border-radius: 15px;
+            /* Liquid Degrade */
+            background: linear-gradient(90deg, var(--color-accent-pink) 0%, var(--color-accent-purple) 100%);
+            color: var(--color-bg-deep);
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(154, 119, 208, 0.7);
+            letter-spacing: 1.5px;
+            margin-top: auto;
+        }
+        .btn-liquid:hover:not(:disabled) {
+            transform: scale(1.02);
+            filter: brightness(1.2);
+            box-shadow: 0 10px 40px rgba(255, 102, 170, 0.8);
+        }
+        .btn-liquid:active:not(:disabled) {
+            transform: translateY(2px);
+        }
+
+        /* SONUÇ GÖSTERİMİ */
+        .result-block-header h2 { font-size: 24px; margin: 0; font-weight: 700; }
+        .status-badge { font-size: 14px; color: #50FFAB; opacity: 0.9; }
+
+        .risk-display {
+            padding: 35px;
+            border-radius: 18px;
+            background-color: var(--color-bg-deep);
+            border: 2px solid transparent;
+            box-shadow: 0 0 15px rgba(154, 119, 208, 0.6);
+            transform: translateY(0);
+        }
+        .risk-display:hover {
+             transform: translateY(-5px); /* Liquid lift */
+        }
+
+        .risk-title { font-size: 16px; color: var(--color-text-faded); margin: 0 0 10px 0; font-weight: 500; }
+        #riskLevel { font-size: 44px; margin: 0; font-weight: 800; letter-spacing: 2px; }
+        #riskPct { font-size: 20px; color: var(--color-text-faded); margin: 10px 0 0 0; font-weight: 600; }
+
+        .reasons-title { font-size: 18px; margin: 35px 0 15px 0; font-weight: 600; }
+
+        #reasonsContainer {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            min-height: 250px;
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .reasons-container-style p { margin: 15px 0; font-size: 16px; line-height: 1.9; }
+
+        /* FOOTER */
+        .app-footer {
+            padding: 30px 40px;
+            font-size: 14px;
+            color: var(--color-danger-soft);
+            text-align: center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .input-area { margin-right: 0; }
+            .control-panel { margin: 20px 0; }
+        }
+        @media (min-width: 1201px) {
+            .main-layout { flex-wrap: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="header-title">
+                <h1>SMS Güvenlik Analizi</h1>
+                <p>Yapay zeka destekli dolandırıcılık / tehdit kontrol paneli</p>
+            </div>
+            <div class="risk-tag">RİSK SEVİYESİ</div>
+        </header>
+    </div>
+
+    <div class="container main-layout">
+        <div class="control-panel input-area">
+            <div class="form-group">
+                <label for="number">GÖNDEREN NUMARA</label>
+                <input type="text" id="number" placeholder="+90..." value="+905551234567">
+            </div>
+
+            <div class="form-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                <label for="sms_text">SMS İÇERİĞİ</label>
+                <textarea id="sms_text" placeholder="Analiz edilecek mesajı buraya yapıştırın." style="flex-grow: 1;">Hesabınızda bir güvenlik açığı tespit edilmiştir. Lütfen hemen giriş yapıp şifrenizi güncelleyin: http://tinyurl.com/giris-yap</textarea>
+            </div>
+
+            <button class="btn-liquid" id="analyzeButton" onclick="analyzeSms()">ANALİZ ET VE RİSKİ BELİRLE</button>
+        </div>
+
+        <div class="control-panel result-area">
+            <div class="result-block-header">
+                <h2>Analiz Sonucu</h2>
+                <span class="status-badge" id="usomStatus">Motor Hazır (v5.1)</span>
+            </div>
+
+            <div id="riskLevelBlock" class="risk-display">
+                <p class="risk-title">ALGILANAN RİSK DÜZEYİ</p>
+                <h3 id="riskLevel" style="color: var(--color-accent-purple);">-</h3>
+                <p id="riskPct">Tehlike Yüzdesi: -</p>
+            </div>
+
+            <h3 class="reasons-title">Tespit Edilen Kriterler</h3>
+            <div id="reasonsContainer" class="reasons-container-style">
+                Henüz analiz yapılmadı.
+            </div>
+        </div>
+    </div>
+
+    <div class="container app-footer">
+        DİKKAT: Bu sistem sadece eğitim ve ön analiz amaçlıdır. Hiçbir zaman kimlik, şifre veya para transferi yapmayın. (Liquid UI v1.0)
+    </div>
+
+    <script>
+        // Python'dan gelen renk kodlarına göre dinamik Liquid Stil ayarları
+        const DYNAMIC_STYLE = {
+            // Python'daki orijinal renk kodları
+            "#2ECC71": { color: "#50FFAB", border: "2px solid #50FFAB", shadow: "0 0 25px rgba(80, 255, 171, 0.5)" },    // YEŞİL (Güvenli)
+            "#F1C40F": { color: "#FFEB50", border: "2px solid #FFEB50", shadow: "0 0 25px rgba(255, 235, 80, 0.6)" },    // SARI (Şüpheli)
+            "#E74C3C": { color: "#FF708C", border: "2px solid #FF708C", shadow: "0 0 30px rgba(255, 112, 140, 0.9)" },    // KIRMIZI (Yüksek Risk)
+            "DEFAULT": { color: "var(--color-accent-purple)", border: "2px solid transparent", shadow: "var(--shadow-subtle)" }
+        };
+
+        async function analyzeSms() {
+            const button = document.getElementById('analyzeButton');
+            const smsText = document.getElementById('sms_text').value;
+            const number = document.getElementById('number').value;
+            const riskLevelBlock = document.getElementById('riskLevelBlock');
+            const riskLevel = document.getElementById('riskLevel');
+            const riskPct = document.getElementById('riskPct');
+            const reasonsContainer = document.getElementById('reasonsContainer');
+            const defaultStyle = DYNAMIC_STYLE["DEFAULT"];
+
+            if (!smsText.trim()) {
+                alert("Lütfen SMS içeriğini girin.");
+                return;
+            }
+
+            // Durumu sıfırla ve bekleme moduna al (Liquid Reset)
+            button.disabled = true;
+            button.textContent = "ANALİZ EDİLİYOR...";
+            riskLevelBlock.style.borderColor = defaultStyle.border;
+            riskLevelBlock.style.boxShadow = defaultStyle.shadow;
+            riskLevel.style.color = defaultStyle.color;
+            reasonsContainer.innerHTML = '<p style="color: var(--color-accent-purple); text-align: center;">Kontrol Sistemi Veriyi İşliyor...</p>';
+
+            try {
+                // Flask API Çağrısı
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ number: number, sms_text: smsText })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    const pyColorCode = result.color;
+                    const style = DYNAMIC_STYLE[pyColorCode] || defaultStyle;
+
+                    // Sonuçları göster (Liquid Glow Effect)
+                    riskLevelBlock.style.borderColor = style.border;
+                    riskLevelBlock.style.boxShadow = style.shadow;
+                    riskLevel.style.color = style.color;
+
+                    riskLevel.textContent = result.level;
+                    riskPct.textContent = `Tehlike Yüzdesi: %${result.finalRiskPct.toFixed(1)}`;
+
+                    // Nedenleri listele
+                    reasonsContainer.innerHTML = result.finalReasons.map(r =>
+                        `<p style="color: ${style.color};">&bull; ${r}</p>`
+                    ).join('');
+
+                } else {
+                    alert(`API Hatası: ${result.error || 'Bilinmeyen bir hata oluştu.'}`);
+                    reasonsContainer.innerHTML = `<p style="color: var(--color-danger-soft);">[HATA]: Sunucudan geçersiz yanıt: ${result.error || 'Bilinmeyen Hata.'}</p>`;
+                }
+            } catch (e) {
+                console.error("Fetch/Sunucu Hatası:", e);
+                alert("Ağ hatası: Flask sunucusu çalışmıyor veya erişilemiyor.");
+                reasonsContainer.innerHTML = `<p style="color: var(--color-danger-soft);">[KRİTİK HATA]: Flask sunucusu ile bağlantı kurulamadı.</p>`;
+            } finally {
+                button.disabled = false;
+                button.textContent = "ANALİZ ET VE RİSKİ BELİRLE";
+            }
+        }
+    </script>
+</body>
+</html>
