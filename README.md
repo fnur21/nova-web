@@ -14,6 +14,10 @@
 
 📁 Modüler dosya yapısı — geliştirmeye çok uygun
 
+🖥️ Demo Görünümü
+
+![Uploading image.png…]()
+
 
 🧰 Teknolojiler
 Alan	Teknoloji
