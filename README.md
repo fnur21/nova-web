@@ -25,6 +25,7 @@ Demo dosyasını indirmek için [buraya tıklayabilirsiniz](./demoNOVA.pbg).
 
 
 🧰 Teknolojiler
+
 Alan	Teknoloji
 Backend	Flask, Python
 Frontend	HTML, CSS, JavaScript
@@ -94,11 +95,6 @@ Mobil uyumlu modern UI
 
 Çoklu dil desteği
 
-👩‍💻 Geliştirici
-
-Fatma Nur Pekmez
-Bilgisayar Mühendisliği — Niğde Ömer Halisdemir Üniversitesi
-GitHub: fnur21
 
 📄 Lisans
 
